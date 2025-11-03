@@ -1,3 +1,12 @@
+# Setup python env
+uv venv .venv  
+source .venv/bin/activate  
+python -m ensurepip --upgrade  
+python -m pip install kafka-python  
+
+# start local cluster with Zookeeper and kafka
+docker compose up -d 
+
 ## Create topic
 
 docker exec -it kafka kafka-topics --create \
@@ -5,6 +14,8 @@ docker exec -it kafka kafka-topics --create \
   --bootstrap-server localhost:9092 \
   --partitions 1 \
   --replication-factor 1
+
+
 
 
 ## list topic
@@ -83,4 +94,4 @@ Batch: 1
 python kafka_producer.py
 
 # spark consumer
-spark-submit  --packages org.apache.spark:spark-sql-kafka-0-10_2.13:4.0.1 pyspark_kafka_consumer.py# myKafka
+spark-submit  --packages org.apache.spark:spark-sql-kafka-0-10_2.13:4.0.1 pyspark_kafka_consumer.py
